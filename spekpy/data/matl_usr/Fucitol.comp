@@ -1,0 +1,26 @@
+{
+    "file_information": {
+        "file_name": "Fucitol.comp",
+        "file_type": "matl_usr",
+        "spekpy_version": "0.0.3",
+        "comment": null
+    },
+    "composition": {
+        "density": 1.84,
+        "number_of_elements": 3,
+        "elements": [
+            [
+                1,
+                0.08491789577874202
+            ],
+            [
+                6,
+                0.4336775344614349
+            ],
+            [
+                8,
+                0.48140456975982304
+            ]
+        ]
+    }
+}

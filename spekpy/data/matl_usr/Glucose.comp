@@ -1,0 +1,26 @@
+{
+    "file_information": {
+        "file_name": "Glucose.comp",
+        "file_type": "matl_usr",
+        "spekpy_version": "0.0.3",
+        "comment": null
+    },
+    "composition": {
+        "density": 1.54,
+        "number_of_elements": 3,
+        "elements": [
+            [
+                1,
+                0.06713718782346664
+            ],
+            [
+                6,
+                0.4000162524295384
+            ],
+            [
+                8,
+                0.5328465597469949
+            ]
+        ]
+    }
+}

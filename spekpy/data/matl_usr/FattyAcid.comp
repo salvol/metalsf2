@@ -1,0 +1,26 @@
+{
+    "file_information": {
+        "file_name": "FattyAcid.comp",
+        "file_type": "matl_usr",
+        "spekpy_version": "0.0.3",
+        "comment": null
+    },
+    "composition": {
+        "density": 0.915,
+        "number_of_elements": 3,
+        "elements": [
+            [
+                1,
+                0.1216884779904084
+            ],
+            [
+                6,
+                0.7668727324548252
+            ],
+            [
+                8,
+                0.1114387895547663
+            ]
+        ]
+    }
+}

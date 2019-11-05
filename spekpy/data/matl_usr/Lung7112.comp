@@ -1,0 +1,30 @@
+{
+    "file_information": {
+        "file_name": "Lung7112.comp",
+        "file_type": "matl_usr",
+        "spekpy_version": "0.0.3",
+        "comment": null
+    },
+    "composition": {
+        "density": 1,
+        "number_of_elements": 4,
+        "elements": [
+            [
+                1,
+                0.045233017760401534
+            ],
+            [
+                6,
+                0.5390140051195336
+            ],
+            [
+                7,
+                0.13233183662463754
+            ],
+            [
+                8,
+                0.28342114049542744
+            ]
+        ]
+    }
+}

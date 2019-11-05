@@ -1,0 +1,22 @@
+{
+    "file_information": {
+        "file_name": "Water.comp",
+        "file_type": "matl_usr",
+        "spekpy_version": "0.0.3",
+        "comment": null
+    },
+    "composition": {
+        "density": 0.992,
+        "number_of_elements": 2,
+        "elements": [
+            [
+                1,
+                0.11189834407236524
+            ],
+            [
+                8,
+                0.8881016559276347
+            ]
+        ]
+    }
+}

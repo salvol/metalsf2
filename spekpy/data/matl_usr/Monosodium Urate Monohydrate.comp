@@ -1,0 +1,34 @@
+{
+    "file_information": {
+        "file_name": "Monosodium Urate Monohydrate.comp",
+        "file_type": "matl_usr",
+        "spekpy_version": "0.0.3",
+        "comment": null
+    },
+    "composition": {
+        "density": 2.16,
+        "number_of_elements": 5,
+        "elements": [
+            [
+                1,
+                0.02421663321593141
+            ],
+            [
+                6,
+                0.2885746984508524
+            ],
+            [
+                7,
+                0.26921926712376937
+            ],
+            [
+                8,
+                0.30751957574853506
+            ],
+            [
+                11,
+                0.11046982546091177
+            ]
+        ]
+    }
+}

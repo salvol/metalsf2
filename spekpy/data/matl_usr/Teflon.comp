@@ -1,0 +1,22 @@
+{
+    "file_information": {
+        "file_name": "Teflon.comp",
+        "file_type": "matl_usr",
+        "spekpy_version": "0.0.3",
+        "comment": null
+    },
+    "composition": {
+        "density": 1,
+        "number_of_elements": 2,
+        "elements": [
+            [
+                6,
+                0.24018250078651723
+            ],
+            [
+                9,
+                0.7598174992134828
+            ]
+        ]
+    }
+}

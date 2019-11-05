@@ -1,0 +1,30 @@
+{
+    "file_information": {
+        "file_name": "Alanine.comp",
+        "file_type": "matl_usr",
+        "spekpy_version": "0.0.3",
+        "comment": null
+    },
+    "composition": {
+        "density": 1.42,
+        "number_of_elements": 4,
+        "elements": [
+            [
+                1,
+                0.07919243155440561
+            ],
+            [
+                6,
+                0.4044374645599508
+            ],
+            [
+                7,
+                0.15721284412484235
+            ],
+            [
+                8,
+                0.35915725976080126
+            ]
+        ]
+    }
+}

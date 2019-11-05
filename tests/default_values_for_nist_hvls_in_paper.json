@@ -1,0 +1,14 @@
+{
+    "NIST_NIST_L30": 0.24,
+    "NIST_NIST_L40": 0.52,
+    "NIST_NIST_L50": 0.79,
+    "NIST_NIST_L80": 1.9,
+    "NIST_NIST_L100": 2.86,
+    "NIST_NIST_M30": 0.39,
+    "NIST_NIST_M40": 0.78,
+    "NIST_NIST_M50": 1.06,
+    "NIST_NIST_M80": 2.9,
+    "NIST_NIST_M100": 5.05,
+    "NIST_NIST_M120": 6.78,
+    "NIST_NIST_M150": 10.02
+}
