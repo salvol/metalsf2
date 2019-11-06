@@ -284,7 +284,7 @@ class Spek:
         homogeneity_coefficient = calculate_homogeneity_coefficient_from_spectrum(self, calc_params, matl)
         return homogeneity_coefficient
 
-    def get_matl(self, matl='Al', hvl_matl=None,hvl=False, frac=False, **kwargs):
+    def get_matl(self, matl='Al', hvl_matl='Al',hvl=False, frac=False, **kwargs):
         """
         A method to calculate the thickness of a desired material that is needed to obtain a first half value layer or
         fraction of air Kerma (transmission). Take note, the default material is Al.

@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='spekpy',
-      version='1.0.0',
+      version='1.0.1',
       description='A Python software toolkit for modelling x-ray spectra from tungsten anode x-ray tubes',
       url='https://bitbucket.org/spekpy/spekpy_release',
       author='Robert Bujila & Gavin Poludniowski',
