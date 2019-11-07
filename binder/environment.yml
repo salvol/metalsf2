@@ -1,0 +1,6 @@
+name: spekpy-environment
+dependencies:
+  - python
+  - numpy
+  - scipy
+  - matplotlib
