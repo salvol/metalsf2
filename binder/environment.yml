@@ -1,8 +1,0 @@
-name: spekpy-environment
-channels:
-  - conda-forge
-dependencies:
-  - python
-  - numpy
-  - scipy
-  - matplotlib

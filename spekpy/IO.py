@@ -20,8 +20,8 @@ SLASH = os.sep
 
 def full_file(*args):
     """
-    A function to form an absolute path to a file from a variable number of parts that represent a path relative to
-    the root directory
+    A function to form an absolute path to a file from a variable number of 
+    parts that represent a path relative to the root directory
 
     :param str args: Variable number of parts
     :return str : The full path to a file
@@ -80,10 +80,12 @@ def write_json_to_disk(data, file_name, ordereddict=1):
 
     :param data: Data to save 
     :param str file_name: Name of file to create
-    :param int ordereddict: If 1, the data is converted to ordered dictionary before saving
+    :param int ordereddict: If 1, the data is converted to ordered dictionary 
+        before saving
     """
     if ordereddict == 1:
-        jsonFormat = json.dumps(OrderedDict(data), indent=4, separators=(',', ': '))
+        jsonFormat = json.dumps(OrderedDict(data), indent=4, 
+                                separators=(',', ': '))
     else:
         jsonFormat = json.dumps(data, indent=4, separators=(',', ': '))
     thedir=os.path.dirname(file_name)
@@ -106,7 +108,8 @@ def read_json_from_disk(file_name):
             data = json.load(file)
             return data
          except:
-             raise Exception('\nError in loading state\nThe file "' + file_name + '" could not be interpreted with json')
+             raise Exception('\nError in loading state\nThe file "' 
+                        + file_name + '" could not be interpreted with json')
 
 
 def write_spectrum_to_disk(header, data, file_name, delimiter, fmt):
@@ -120,7 +123,8 @@ def write_spectrum_to_disk(header, data, file_name, delimiter, fmt):
     :param str fmt: The format of the numerical values in the export
     :return:
     """
-    np.savetxt(file_name, np.transpose(data), delimiter=delimiter, fmt=fmt, header=header)
+    np.savetxt(file_name, np.transpose(data), delimiter=delimiter, fmt=fmt,
+               header=header)
 
 def read_spectrum_from_disk(spekpy_obj):
     """
@@ -133,21 +137,23 @@ def read_spectrum_from_disk(spekpy_obj):
     dk: The bin width of the energy bins
 
     :param Spek spekpy_obj: A spekpy state.
-    :return numpy.array k, numpy.array brem, numpy.array char, float dk: A spectrum from file
+    :return numpy.array k, numpy.array brem, numpy.array char, float dk: A 
+        spectrum from file
     
     """
     file_name = spekpy_obj.state.external_spectrum.external_spectrum
     delimiter = spekpy_obj.state.external_spectrum.ext_delim
     try:
         # Characteristic contribution specified
-        k, spk, spk_ch = np.loadtxt(file_name, delimiter=delimiter, unpack=True)
+        k, spk, spk_ch = np.loadtxt(file_name, delimiter=delimiter, 
+                                    unpack=True)
         char = spk_ch[k>1] # Remove values that are lower than 1 keV in energy
-        brem = spk[k>1] - char  # Remove values that are lower than 1 keV in energy
+        brem = spk[k>1] - char  # Remove values lower than 1 keV in energy
     except:
         # Characteristic contribution unspecified
         k, spk = np.loadtxt(file_name, delimiter=delimiter, unpack=True)
         brem = spk[k>1]  # Remove values that are lower than 1 keV in energy
-        char = np.zeros(brem.shape) # Remove values that are lower than 1 keV in energy
+        char = np.zeros(brem.shape) # Remove values lower than 1 keV in energy
     k = k[k>1]  # Remove values that are lower than 1 keV in energy
     dk = k[1] - k[0]
     return k, brem, char, dk
@@ -171,7 +177,7 @@ def is_file(file_name, base_path):
     :return str file_name_path: The name of existing file with path added
     """
     path = os.path.dirname(file_name)
-    if path is '':
+    if path == '':
         file_name_path = base_path + SLASH + file_name
     else:
         file_name_path = file_name
@@ -183,43 +189,66 @@ def is_file(file_name, base_path):
 
 def get_matls():
     """
-    A function to create a list of all of the spekpy defined and user defined material compisitions
+    A function to create a list of all of the spekpy defined and user defined 
+    material compisitions
 
-    :return list matls_usr, list matls_def: 2 lists conataining the available material definitions
+    :return list matls_usr_lst, list matls_def_lst: 2 lists conataining the 
+        available material definitions
     """
-    matls_usr_dir_contents = os.listdir(full_file(Const.dir_data, Const.dir_matl_usr))
-    matls_def_dir_contents = os.listdir(full_file(Const.dir_data, Const.dir_matl_def))
-    matls_usr = []
-    matls_def = []
+    try:
+        matls_usr_dir_contents = os.listdir(full_file(Const.dir_data, 
+                                                  Const.dir_matl_usr))
+    except:
+        matls_usr_dir_contents = []
+    try:    
+        matls_def_dir_contents = os.listdir(full_file(Const.dir_data, 
+                                                   Const.dir_matl_def))
+    except:
+        matls_def_dir_contents = []
+        
+    matls_usr_lst = []
+    matls_def_lst = []
     for matl_usr in matls_usr_dir_contents:
         if matl_usr.endswith('.comp'):
-            matls_usr.append(matl_usr[:-5])
+            matls_usr_lst.append(matl_usr[:-5])
     
     for matl_def in matls_def_dir_contents:
         if matl_def.endswith('.comp'):
-            matls_def.append(matl_def[:-5])
+            matls_def_lst.append(matl_def[:-5])
 
-    return matls_usr, matls_def
+    return matls_usr_lst, matls_def_lst
 
 def get_states():
     """
-    A function to create a list of all of the spekpy defined and user defined states
+    A function to create a list of all of the spekpy defined and user defined 
+    states
 
-    :return list states_usr, list states_def: 2 lists conataining the available material definitions
+    :return list states_usr_lst, list states_def_lst: 2 lists conataining the 
+        available material definitions
     """
-    states_usr_dir_contents = os.listdir(full_file(Const.dir_data, Const.dir_state_usr))
-    states_def_dir_contents = os.listdir(full_file(Const.dir_data, Const.dir_state_def))
-    states_usr = []
-    states_def = []
+    try:
+        states_usr_dir_contents = os.listdir(full_file(Const.dir_data, 
+                                                   Const.dir_state_usr))
+    except:
+        states_usr_dir_contents = []
+    
+    try:
+        states_def_dir_contents = os.listdir(full_file(Const.dir_data, 
+                                                   Const.dir_state_def))
+    except:
+        states_def_dir_contents = []
+        
+    states_usr_lst = []
+    states_def_lst = []
     for state_usr in states_usr_dir_contents:
         if state_usr.endswith('.state'):
-            states_usr.append(state_usr[:-6])
+            states_usr_lst.append(state_usr[:-6])
     
     for state_def in states_def_dir_contents:
         if state_def.endswith('.state'):
-            states_def.append(state_def[:-6])
+            states_def_lst.append(state_def[:-6])
 
-    return states_usr, states_def
+    return states_usr_lst, states_def_lst
 
 def delete_file(file_name_parts):
     """
@@ -237,7 +266,9 @@ def delete_file(file_name_parts):
 
 def print_matls(matl_dir=None):
     """
-    A method to print all of the existing materials to the terminal. This can be used to see which materials are available in spekpy or have been created by the user
+    A method to print all of the existing materials to the terminal. This can 
+    be used to see which materials are available in spekpy or have been created
+    by the user
 
     :return:
     """
@@ -254,7 +285,9 @@ def print_matls(matl_dir=None):
 
 def print_states(state_dir=None):
     """
-    A method to print all of the existing states to the terminal. This can be used to see which states are available in spekpy or have been created by the user
+    A method to print all of the existing states to the terminal. This can be 
+    used to see which states are available in spekpy or have been created by 
+    the user
 
     :return:
     """
@@ -275,18 +308,23 @@ def print_matl_info(matl):
 
     :return:
     """
-    matl_file = find_file(file_name=matl, extension=Const.extension_matl_composition, directories=[Const.dir_matl_usr, Const.dir_matl_def])
+    matl_file = find_file(file_name=matl, 
+                          extension=Const.extension_matl_composition, 
+                          directories=[Const.dir_matl_usr, Const.dir_matl_def])
     if matl_file is not None: 
         w = 0
         matl_comp = read_json_from_disk(matl_file)
         matl_def_str = '\nMaterial Definition:\n'
         matl_def_str = matl_def_str + 'Name: ' + matl + '\n'
         try:
-            matl_def_str = matl_def_str + 'Comment: ' + matl_comp['file_information']['comment'] + '\n'
+            matl_def_str = matl_def_str + 'Comment: ' + \
+                matl_comp['file_information']['comment'] + '\n'
         except:
             pass
-        matl_def_str = matl_def_str + 'Density: ' + str(matl_comp['composition']['density']) + ' [g cm^-3]\n'
-        matl_def_str = matl_def_str + 'Number of elements: ' + str(matl_comp['composition']['number_of_elements']) + '\n'
+        matl_def_str = matl_def_str + 'Density: ' + \
+            str(matl_comp['composition']['density']) + ' [g cm^-3]\n'
+        matl_def_str = matl_def_str + 'Number of elements: ' + \
+            str(matl_comp['composition']['number_of_elements']) + '\n'
         matl_def_str = matl_def_str + 'Z\tMass Fraction\n'
         elements = matl_comp['composition']['elements']
         for el in elements:
@@ -301,15 +339,17 @@ def print_matl_info(matl):
 
 def print_matls_in_group(matl_group):
     """ 
-    A function to print all of the materials that belong to a group of definitions. ICRU 
-    and ICRP are supported as material groups in this release. 
+    A function to print all of the materials that belong to a group of 
+    definitions. ICRU and ICRP are supported as material groups in this 
+    release. 
 
     :param str matl_group: The name of the material definition group
     :return:
     """
 
-    if matl_group is not 'ICRU' and matl_group is not 'ICRP':
-        raise Exception(matl_group + ' is not a supported material group. Use either ICRP or ICRU')
+    if matl_group != 'ICRU' and matl_group != 'ICRP':
+        raise Exception(matl_group + 
+                ' is not a supported material group. Use either ICRP or ICRU')
 
     matls_user, matls_def = get_matls()
     print('Available material definitions for the material group ' + matl_group)
@@ -318,5 +358,3 @@ def print_matls_in_group(matl_group):
             print(matl_def)
 
     
-
-

@@ -10,7 +10,8 @@ electron_radius = 2.81794e-13  # Classical electron radius [cm]
 avogadros_number = 6.02e23  # [atoms/mole]
 electron_charge = 1.602e-19  # [C]
 detour_factor = 2.0  # Reciprocal of detour factor for an electron in diffusion
-geometry_factor = 1.0 / (4.0 * np.pi)  # Geometry factor (converts to per unit solid angle)
+geometry_factor = 1.0 / (4.0 * np.pi)  # Geometry factor (converts to per unit
+# ... solid angle)
 
 # Material constants
 atomic_number_tungsten = 74  # Atomic number Tungsten
@@ -27,12 +28,16 @@ energy_L_3_edge = 10.2
 
 
 # nK - ratio of K-photons escaping to num of brems emitted above K-edge
-#     nK is related to SpekCalc's P parameter (see Ref. [2] in SpekModel.py, equations 17 to 20): 0.5*(1+P)*fk=nK
+# ... nK is related to SpekCalc's P parameter (see Ref. [2] in SpekModel.py, 
+# ... equations 17 to 20): 0.5*(1+P)*fk=nK
 # nL1/L2/L3 - ratio of L-photons escaping to num of brems emitted above L-edge
 # nbr - bremsstrahlung normalization factor
-# scale - if a number is specified it is intepreted as keV and electron data is extrapolated from this this value
-# brxs - source of bremsstrahlung cross-section: 'nist' or 'mebh' (modified Elwet-Bethe-Heitler)
-# depth - maximum penetration depth based on Thomson-Whiddington range ('tw') or the CSDA range ('csda')
+# scale - if a number is specified it is intepreted as keV and electron data is
+# ... extrapolated from this this value
+# brxs - source of bremsstrahlung cross-section: 'nist' or 'mebh' (modified 
+# ... Elwet-Bethe-Heitler)
+# depth - maximum penetration depth based on Thomson-Whiddington range ('tw') 
+# ... or the CSDA range ('csda')
 model_param_default = {'nbr': 0.9279, 
                        'nL1': 0.5832, 
                        'nL2': 1.1107,
@@ -50,10 +55,14 @@ model_param_legacy = {'nbr':  0.7046,
                       'scale': 100,
                       'brxs': 'mebh',
                       'depth': 'tw'}
-# The default SpekCalc value of nbr (i.e. nf) was 0.68. The default SpekCalc value of nK was 0.5*(1+0.33)*(4.4-1.0)/4.4 = 0.514
-# The "legacy" values are different due to the different numerical implementation here.
-# The precise "legacy" values were selected to agree closely with the predictions of SpekCalc
-# The precise "default" values were selected to agree closely with the Monte Carlo simulations (BEAMnrc) 
+# The default SpekCalc value of nbr (i.e. nf) was 0.68. The default SpekCalc 
+# ... value of nK was 0.5*(1+0.33)*(4.4-1.0)/4.4 = 0.514
+# The "legacy" values are different due to the different numerical 
+# ... implementation here.
+# The precise "legacy" values were selected to agree closely with the 
+# ... predictions of SpekCalc
+# The precise "default" values were selected to agree closely with the Monte
+# ...  Carlo simulations (BEAMnrc) 
 
 # I/O constants
 dir_data = 'data'
@@ -91,5 +100,7 @@ units_energy = 'keV'
 units_boolean = 'bool'
 units_flu = 'Photons cm^-2'
 units_flu_norm_mas = 'Photons cm^-2 mAs^-1'
-units_flu_norm_kerma = lambda ref_kerma: 'Photons cm^-2 (%.2f uGy)^-1' % ref_kerma
-units_flu_norm_flu = lambda ref_flu: 'Photons cm^-2 (%.2f Photons cm^-2)^-1' % ref_flu
+units_flu_norm_kerma = \
+    lambda ref_kerma: 'Photons cm^-2 (%.2f uGy)^-1' % ref_kerma
+units_flu_norm_flu = \
+    lambda ref_flu: 'Photons cm^-2 (%.2f Photons cm^-2)^-1' % ref_flu

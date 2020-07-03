@@ -26,21 +26,26 @@ def get_current_time_stamp(mode='str'):
     return time_stamp
 
 
-def format_parameter_str(parameter_name, parameter_value, parameter_unit, decimal_places=1):
+def format_parameter_str(parameter_name, parameter_value, parameter_unit, 
+                         decimal_places=1):
     """
     A helper function to help format spekpy parameters into a string
 
     :param str parameter_name: The name of the paramter
     :param int,flot,bool,None,str parameter_value: The value of the pararmeter
     :param str parameter_unit: The unit of the parameter
-    :param int decimal_places: The number of decimal places to be used for numeric parameter values (Optional)
+    :param int decimal_places: The number of decimal places to be used for 
+        numeric parameter values (Optional)
     :return str : The formatted string representing a parameter
     """
-    if isinstance(parameter_value, (int, float)) and not isinstance(parameter_value, bool):
+    if isinstance(parameter_value, (int, float)) \
+        and not isinstance(parameter_value, bool):
         the_value = ('%.*f' % (decimal_places, parameter_value))
-    elif isinstance(parameter_value, bool) or parameter_value is None or isinstance(parameter_value, list):
+    elif isinstance(parameter_value, bool) or parameter_value is None \
+        or isinstance(parameter_value, list):
         the_value = str(parameter_value)
-    elif isinstance(parameter_value, BYTES) or isinstance(parameter_value, STR):
+    elif isinstance(parameter_value, BYTES) \
+        or isinstance(parameter_value, STR):
         the_value = parameter_value
     else:
         raise Exception('Could not format the parameter '+parameter_name+'!')
