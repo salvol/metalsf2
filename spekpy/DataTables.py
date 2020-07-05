@@ -85,9 +85,9 @@ class MuData:
                                       mu_data_source)
         data = read_json_from_disk(mu_data_file_name)
         self.mu_over_rho_coefficients_energies = \
-            np.array(data['photon energy'])
+            np.array(data['photon energy'],dtype=object)
         self.mu_over_rho_coefficients = \
-            np.array(data['mu_over_rho'])
+            np.array(data['mu_over_rho'],dtype=object)
         return
 
     def get_mu_over_rho(self, atomic_number_element, energy_grid):
