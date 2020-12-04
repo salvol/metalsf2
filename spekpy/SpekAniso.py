@@ -202,24 +202,46 @@ class SpekAniso:
                                 2)
             # Correct NE from explicit diversion factor to diversion = 2 
             NE_data = NE_data * 2. / diversion
+            # Determine expected normalization (NE integrated over
+            # ... dE and dx) at self.E0 using linear interpolation
+            NE_integrated = trapz(trapz(NE_data,u_data,axis=0),
+            	x_data,axis=0)*E0_data
+            weight = 1.0 - (self.E0 - E0_data[0]) / (E0_data[1] - E0_data[0])
+            NE_integrated_expected = weight * NE_integrated[0] + \
+            	(1.0 - weight) * NE_integrated[1]
             # 3D linear interpolation of NE onto the pre-defined grid
             NE = map_coordinates( NE_data, array( [imap, jmap, kmap] ), 
                                  order=1)
             # The 3rd dim is interpolated at a single value so we can remove
             # ... the singlet dim
             NE = squeeze(NE)
+            # Correct actual to expected normalization
+            NE_integrated_actual = (trapz( trapz(NE, E/self.E0, axis=0), 
+            	x_data, axis=0)*self.E0)
+            NE = NE * NE_integrated_expected / NE_integrated_actual
             # Hmm?
             NE[-1,:] = NE[-1,:] * 2.
             # Define uniform electron direction distribution
             pomega_e = ones( [theta_e.size, E.size, x_data.size] )
             pomega_e = pomega_e / (sum( pomega_e, axis=0) * domega_e)
         else: # Explicit treatment
+            # Determine expected normalization (NE integrated over
+            # ... dE and dx) at self.E0 using linear interpolation
+            NE_integrated = trapz(trapz(NE_data,u_data,axis=0),
+            	x_data,axis=0)*E0_data
+            weight = 1.0 - (self.E0 - E0_data[0]) / (E0_data[1] - E0_data[0])
+            NE_integrated_expected = weight * NE_integrated[0] + \
+            	(1.0 - weight) * NE_integrated[1]
             # 3D linear interpolation of NE onto the pre-defined grid
             NE = map_coordinates( NE_data, array( [imap, jmap, kmap] ), 
                                  order=1)
             # The 3rd dim is interpolated at a single value so we can remove
             # ... the singlet dim
             NE = squeeze(NE)
+            # Correct actual to expected normalization
+            NE_integrated_actual = (trapz( trapz(NE, E/self.E0, axis=0), 
+            	x_data, axis=0)*self.E0)
+            NE = NE * NE_integrated_expected / NE_integrated_actual
             # Hmm?
             NE[-1,:] = NE[-1,:] * 2.
             # 1D array of electron directions for data tables
