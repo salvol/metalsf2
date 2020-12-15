@@ -150,8 +150,12 @@ class SpekAniso:
         filepath = os.path.join( self.dirpath,'Z' + str(Zdata) + '_E0sim.npz' )
         data = load( filepath )
         E0_sim = data['E0_sim'].astype('float64')
-        # Read and extract the appropriate data file (fileNr depends on energy)
+        # Find the appropriate data file (fileNr depends on energy)
         fileNr = sum( insert( E0_sim[1:], 0, 0.0 ) / float(self.E0)<=1)
+        # Ensure file number does not go out of range (primarily to avoid
+        # ... floating point rounding errors at max and min kV values)
+        fileNr = max(1,min(fileNr, E0_sim.size-1))
+        # Read and extract the data file
         filepath = os.path.join( self.dirpath,'Z' + str(Zdata) + '_' + \
                                 str(fileNr) + '.npz' )
         data = load( filepath )
@@ -219,8 +223,6 @@ class SpekAniso:
             NE_integrated_actual = (trapz( trapz(NE, E/self.E0, axis=0), 
             	x_data, axis=0)*self.E0)
             NE = NE * NE_integrated_expected / NE_integrated_actual
-            # Hmm?
-            NE[-1,:] = NE[-1,:] * 2.
             # Define uniform electron direction distribution
             pomega_e = ones( [theta_e.size, E.size, x_data.size] )
             pomega_e = pomega_e / (sum( pomega_e, axis=0) * domega_e)
@@ -242,8 +244,6 @@ class SpekAniso:
             NE_integrated_actual = (trapz( trapz(NE, E/self.E0, axis=0), 
             	x_data, axis=0)*self.E0)
             NE = NE * NE_integrated_expected / NE_integrated_actual
-            # Hmm?
-            NE[-1,:] = NE[-1,:] * 2.
             # 1D array of electron directions for data tables
             theta_e_data = data['theta_e'].astype('float64')
             # 4D array of electron angular distribution for data tables
