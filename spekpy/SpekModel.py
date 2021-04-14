@@ -95,6 +95,11 @@ class SpekModel:
         E0 = spekpy_obj.state.model_parameters.kvp
         # Bin width of photon energies [keV]
         dk = spekpy_obj.state.model_parameters.dk
+        # Bin shift (fraction)
+        if spekpy_obj.state.model_parameters.shift is None:
+            shift = 0.0
+        else:
+            shift = spekpy_obj.state.model_parameters.shift
         # String indicating if legacy mode is activated
         physics = spekpy_obj.state.model_parameters.physics
          # Linear attenuation data
@@ -106,7 +111,9 @@ class SpekModel:
             int(((E0 - dk * 0.5) - 1.0) / dk) + 1
         self.k = \
             np.linspace(E0 - dk * (self.number_of_photon_energy_bins - 0.5),
-                             E0 - dk * 0.5, self.number_of_photon_energy_bins)
+                             E0 - dk * 0.5, 
+                             self.number_of_photon_energy_bins) \
+                             + shift*dk
 
         if physics != 'spekcalc' and physics != 'spekpy-v1': # Ref. [6-8]
             x = spekpy_obj.state.spectrum_parameters.x

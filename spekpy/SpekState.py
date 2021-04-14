@@ -72,6 +72,7 @@ class State(object):
         mp_str = fmt_param('Tube Voltage', mp['kvp'], 'kVp') + \
                  fmt_param('Anode Angle', mp['th'], 'degrees') + \
                  fmt_param('Energy Bin', mp['dk'], 'keV') + \
+                 fmt_param('Bin shift fraction', mp['shift'], '') + \
                  fmt_param('Physics Mode', mp['physics'], 'str') + \
                  fmt_param('Mu Data Source', mp['mu_data_source'], 'str') + \
                  fmt_param('Target', mp['targ'], 'str')
@@ -264,6 +265,8 @@ class State(object):
                                      self.model_parameters.th),
                                     ('dk', 
                                      self.model_parameters.dk),
+                                    ('shift', 
+                                     self.model_parameters.shift),
                                     ('physics', 
                                      self.model_parameters.physics),
                                     ('mu_data_source', 
@@ -370,6 +373,7 @@ class ModelParameterDef(object):
         self.kvp = None
         self.th = None
         self.dk = None
+        self.shift = None
         self.physics = None
         self.mu_data_source = None
         self.targ = None

@@ -20,6 +20,7 @@ from spekpy.SpekTools import load_mu_data, change_filtration, \
     StandardResults, generate_spectrum, make_composition_def
 from spekpy.DataTables import data
 from numpy import isclose
+from scipy.ndimage import gaussian_filter
 
 
 class Spek:
@@ -27,7 +28,7 @@ class Spek:
     def __init__(self,
             kvp=None, th=None, dk=None, mu_data_source=None, physics=None,
             x=None, y=None, z=None, mas=None, brem=None, char=None, obli=None,
-            comment=None, targ=None, init_default=True):
+            comment=None, targ=None, shift=None, init_default=True):
         
         self._rg, self._pe, self._ne, self._line_data, self._nist_brem_data \
             = data
@@ -87,10 +88,14 @@ class Spek:
                         raise Exception("Requested kVp is out of range for "
                                         "selected physics model and target"
                                         "(kvp = 20 to 50 kV)")
+            if shift is not None:
+                if shift > 0.5 or shift < -0.5:
+                    raise Exception("Requested bin shift is outside allowed "
+                                    "range (shift = -0.5 to +0.5)")
             # Assign parameters to state          
             self.set_state_parameters(kvp=kvp, th=th, dk=dk, physics=physics, 
                 mu_data_source=mu_data_source, x=x, y=y, z=z, mas=mas, 
-                brem=brem, char=char, obli=obli, targ=targ)
+                brem=brem, char=char, obli=obli, targ=targ, shift=shift)
 
     @staticmethod
     def alias(name):
@@ -361,7 +366,7 @@ class Spek:
                                 self.state.filtration)
         return spk
 
-    def get_spectrum(self,edges=False, flu=True, diff=True, **kwargs):
+    def get_spectrum(self,edges=False, flu=True, diff=True, sig=None, **kwargs):
         """
         A method to get the energy and spectrum for the parameters in the 
         current spekpy state
@@ -379,14 +384,22 @@ class Spek:
             depending of values of flu and diff inputs
         """
         k = self.get_k(**kwargs)
+        dk = self.state.model_parameters.dk
+        spk = self.get_spk(**kwargs)
+        
+        # Apply Gaussian filter to degrade energy resolution if requested
+        if sig is not None:
+            spk = gaussian_filter(spk, sig/dk, mode='constant')
+        # Provide requested definition of spectrum    
         if flu and diff:
-            spk = self.get_spk(**kwargs)
+            spk = spk
         elif not flu and diff:
-            spk = self.get_spk(**kwargs) * k
+            spk = spk * k
         elif flu and not diff:
-            spk = self.get_spk(**kwargs) * (k[1] - k[0])
+            spk = spk * dk
         else:
-            spk = self.get_spk(**kwargs) * k * (k[1] - k[0])
+            spk = spk * k * dk
+        # Format output as requested
         k_out, spk_out = calculate_output_arrays(k, spk, edges=edges)
         return k_out, spk_out
     
