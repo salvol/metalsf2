@@ -41,7 +41,7 @@ def logarithmic_interpolator(dependent_variables, independent_variables,
     ln_dependent_variables = np.log(dependent_variables)
     ln_independent_variables = np.log(independent_variables)
     interpolater = interpolate.interp1d(ln_independent_variables, 
-                                    ln_dependent_variables, bounds_error=False)
+                                    ln_dependent_variables, bounds_error=False,assume_sorted=True)
     ln_interpolation_values = np.log(interpolation_values)
     ln_interpolated_values = interpolater(ln_interpolation_values)
     interpolated_values = np.exp(ln_interpolated_values)
@@ -370,7 +370,7 @@ class ElectronData:
         """
         erng = np.array(self.range_data['E0']) * Const.conversion_MeV2keV
         rng = np.array(self.range_data['range_csda'])
-        return interpolate.interp1d(erng, rng, bounds_error=False)
+        return interpolate.interp1d(erng, rng, bounds_error=False,assume_sorted=True)
 
 class LineData:
     """
