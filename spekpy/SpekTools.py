@@ -530,7 +530,7 @@ def calculate_required_filter_thickness(spekpy_obj, calc_params,
     return required_thickness
 
 
-def calculate_output_arrays(k, spk, edges):
+def calculate_output_arrays(k, spk, edges, addend):
     """
     A method to get the energy and spectrum arrays for the parameters in the 
     current spekpy state, but in bin-edge format (i.e. staircase or histogram 
@@ -539,20 +539,29 @@ def calculate_output_arrays(k, spk, edges):
     :param k: Array with photon energies (mid-bin)
     :param array spk: Array with photon fluences (values corresponding to k)
     :param bool edges: keyword
+    :param bool addend: keyword
     :return array k_out: Array with photon energies (bin edge values)
     :return array spk_out: Array with photon fluences (values corresponding to
         k_out)
     """
+    dk = k[1] - k[0]
+    # If addend true add a zero fluence point to end of array
+    if addend: 
+        kp = np.concatenate((k,[k[-1]+dk]))
+        spkp = np.concatenate((spk,[0.0]))
+    else:
+        kp = k
+        spkp = spk
+   # If edges true output arrays in staircase/bin format
     if edges:
-        dk = k[1] - k[0]
-        spk_out=np.repeat(spk,2)
-        kminus = k - dk*0.5
-        kplus = k + dk*0.5
+        spk_out=np.repeat(spkp,2)
+        kminus = kp - dk*0.5
+        kplus = kp + dk*0.5
         kunsorted = np.concatenate((kminus,kplus))
         k_out = np.sort(kunsorted)
     else:
-        spk_out = spk
-        k_out = k
+        spk_out = spkp
+        k_out = kp
     return k_out, spk_out
 
 class StandardResults:

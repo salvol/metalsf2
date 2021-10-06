@@ -196,13 +196,13 @@ def get_matls():
         available material definitions
     """
     try:
-        matls_usr_dir_contents = os.listdir(full_file(Const.dir_data, 
-                                                  Const.dir_matl_usr))
+        matls_usr_dir_contents = sorted(os.listdir(full_file(Const.dir_data, 
+                                                  Const.dir_matl_usr)))
     except:
         matls_usr_dir_contents = []
     try:    
-        matls_def_dir_contents = os.listdir(full_file(Const.dir_data, 
-                                                   Const.dir_matl_def))
+        matls_def_dir_contents = sorted(os.listdir(full_file(Const.dir_data, 
+                                                   Const.dir_matl_def)))
     except:
         matls_def_dir_contents = []
         
@@ -227,14 +227,14 @@ def get_states():
         available material definitions
     """
     try:
-        states_usr_dir_contents = os.listdir(full_file(Const.dir_data, 
-                                                   Const.dir_state_usr))
+        states_usr_dir_contents = sorted(os.listdir(full_file(Const.dir_data, 
+                                                   Const.dir_state_usr)))
     except:
         states_usr_dir_contents = []
     
     try:
-        states_def_dir_contents = os.listdir(full_file(Const.dir_data, 
-                                                   Const.dir_state_def))
+        states_def_dir_contents = sorted(os.listdir(full_file(Const.dir_data, 
+                                                   Const.dir_state_def)))
     except:
         states_def_dir_contents = []
         

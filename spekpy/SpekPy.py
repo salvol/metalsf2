@@ -244,7 +244,7 @@ class Spek:
                 y_calc=calc_params.y
                 z_calc=calc_params.z
                 if not isclose(x_calc/z_calc,x/z,atol=1e-5) or \
-                    not isclose(y_calc/y_calc,y/z,atol=1e-5):
+                    not isclose(y_calc/z_calc,y/z,atol=1e-5):
                     raise Exception('Cannot update spatial position.\n' +
                     'Specified value of "physics" keyword prohibits a ' +
                     'change in take-off angles on-the-fly.\n' +
@@ -366,13 +366,16 @@ class Spek:
                                 self.state.filtration)
         return spk
 
-    def get_spectrum(self,edges=False, flu=True, diff=True, sig=None, **kwargs):
+    def get_spectrum(self,edges=False, flu=True, diff=True, sig=None, 
+                     addend=False,**kwargs):
         """
         A method to get the energy and spectrum for the parameters in the 
         current spekpy state
 
         :param bool edges: Keyword argument to determine whether midbin or edge
             of bins data are returned
+        :param bool addend: Keyword argument to determine whether a zero
+            end point is added to the spectrum
         :param bool flu: Whether to return fluence or energy-fluence
         :param bool diff: Whether to return spectrum differential in energy
         :param kwargs: Keyword arguments to change parameters that are used for
@@ -400,10 +403,11 @@ class Spek:
         else:
             spk = spk * k * dk
         # Format output as requested
-        k_out, spk_out = calculate_output_arrays(k, spk, edges=edges)
+        k_out, spk_out = calculate_output_arrays(k, spk, edges=edges, 
+                                                 addend=addend)
         return k_out, spk_out
     
-    def get_kerma(self, norm=True, **kwargs):
+    def get_kerma(self, norm=False, **kwargs):
         
         """
         A method to get the air Kerma for the current spekpy state
