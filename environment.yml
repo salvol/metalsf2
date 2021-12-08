@@ -1,0 +1,10 @@
+name: myenv36
+channels:
+  - conda-forge
+  - http://dmpelt.gitlab.io/sirtfilter/
+  - defaults
+dependencies :
+  - numpy
+  - matplotlib
+  
+
