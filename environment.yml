@@ -7,5 +7,6 @@ dependencies :
   - numpy
   - matplotlib
   - xraydb
+  - astra-toolbox
   
 
